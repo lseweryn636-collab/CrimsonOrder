@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Regulamin – Crimson Order</title>
+    <style>
+        :root {
+            --yellow: #facc15;
+            --yellow-soft: #fde047;
+            --bg-main: #0f0f0f;
+            --bg-card: #181818;
+            --text-main: #f5f5f5;
+            --text-muted: #b5b5b5;
+            --accent-red: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text-main);
+            background: radial-gradient(circle at top, #1a1a1a, var(--bg-main));
+            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        header {
+            padding: 60px 20px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            inset: 10% 20%;
+            border-radius: 999px;
+            border: 1px solid rgba(250, 204, 21, 0.18);
+            opacity: 0.2;
+            filter: blur(2px);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--yellow), var(--yellow-soft));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: var(--text-muted);
+            max-width: 480px;
+            margin: 0 auto;
+            font-size: 0.98rem;
+        }
+
+        main {
+            max-width: 980px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px auto 26px;
+            padding: 6px;
+            border-radius: 999px;
+            background: #1b1b1b;
+            border: 1px solid rgba(250, 204, 21, 0.16);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65);
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            position: relative;
+            background: transparent;
+            color: var(--text-main);
+            border: 0;
+            padding: 10px 20px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: all 0.18s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(circle at 0 0, rgba(250, 204, 21, 0.4), transparent 55%);
+            opacity: 0;
+            transition: opacity 0.18s ease;
+            pointer-events: none;
+        }
+
+        .tab span.dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.7);
+        }
+
+        .tab:hover {
+            color: var(--yellow-soft);
+        }
+
+        .tab:hover span.dot {
+            background: var(--yellow-soft);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, var(--yellow), var(--yellow-soft));
+            color: #000;
+            box-shadow: 0 0 20px rgba(250, 204, 21, 0.6);
+        }
+
+        .tab.active span.dot {
+            background: var(--yellow);
+        }
+
+        .tab.active::before {
+            opacity: 1;
+        }
+
+        /* RULES */
+        .rules {
+            display: grid;
+            gap: 16px;
+        }
+
+        .rule {
+            background: linear-gradient(145deg, #1c1c1c, var(--bg-card));
+            border-radius: 18px;
+            padding: 20px 22px;
+            display: flex;
+            gap: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(250, 204, 21, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rule-inner {
+            position: relative;
+            display: flex;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .rule-number {
+            background: linear-gradient(135deg, var(--yellow), var(--yellow-soft));
+            color: #000;
+            min-width: 40px;
+            height: 40px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.95rem;
+            box-shadow: 0 8px 20px rgba(250, 204, 21, 0.6);
+        }
+
+        .rule-text {
+            line-height: 1.7;
+            font-size: 0.95rem;
+            color: #e5e7eb;
+        }
+
+        .rule-text strong {
+            color: var(--yellow-soft);
+            font-weight: 600;
+        }
+
+        /* TAB CONTENT */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .tab-content.active {
+            display: grid;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(250, 204, 21, 0.1);
+        }
+
+        footer span {
+            color: var(--yellow);
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 780px) {
+            header {
+                padding-top: 40px;
+            }
+            header h1 {
+                font-size: 2.2rem;
+            }
+            .rule {
+                padding: 16px 18px;
+            }
+            .rule-number {
+                min-width: 36px;
+                height: 36px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .tabs {
+                justify-content: flex-start;
+            }
+            main {
+                padding-inline: 16px;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Regulamin serwera Crimson Order</h1>
+    <p>Zapoznaj się z zasadami obowiązującymi na serwerze, w organizacji oraz z kodeksem organizacji.</p>
+</header>
+
+<main>
+    <nav class="tabs" aria-label="Nawigacja sekcji regulaminu">
+        <button class="tab active" data-target="discord" type="button"><span class="dot"></span>Regulamin Discord</button>
+        <button class="tab" data-target="org" type="button"><span class="dot"></span>Regulamin Organizacji</button>
+        <button class="tab" data-target="code" type="button"><span class="dot"></span>Kodeks Organizacji</button>
+    </nav>
+
+    <!-- REGULAMIN DISCORD -->
+    <section id="discord" class="rules tab-content active" aria-label="Regulamin Discord">
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">1</div>
+                <div class="rule-text">
+                    Wchodząc na serwer jesteś zobowiązany do przestrzegania regulaminu. Jeśli go nie znasz – to Twój problem.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">2</div>
+                <div class="rule-text">
+                    Zakaz spamu.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">3</div>
+                <div class="rule-text">
+                    Zakaz pingowania na kanałach, które nie są do tego przeznaczone.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">4</div>
+                <div class="rule-text">
+                    Zakaz spamu bindami podczas gry.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">6</div>
+                <div class="rule-text">
+                    Zakaz nadużywania uprawnień administratora.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">7</div>
+                <div class="rule-text">
+                    Zakaz propagowania nazizmu, faszyzmu oraz komunizmu.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">8</div>
+                <div class="rule-text">
+                    Zakaz reklamowania innych serwerów.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">9</div>
+                <div class="rule-text">
+                    Zakaz wysyłania treści NSFW.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">10</div>
+                <div class="rule-text">
+                    Komendy botów należy wykonywać wyłącznie na kanale do tego wyznaczonym.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">11</div>
+                <div class="rule-text">
+                    Każdy kanał ma swoje przeznaczenie. Pisz zgodnie z tematyką kanału i przestrzegaj jego zasad.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">12</div>
+                <div class="rule-text">
+                    W przypadku naruszenia regulaminu użytkownik może otrzymać ostrzeżenie, czasowe wyciszenie, ograniczenie dostępu do kanałów lub bana.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">13</div>
+                <div class="rule-text">
+                    Zakaz używania N-wordów, C-wordów i P-wordów.
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <!-- REGULAMIN ORGANIZACJI -->
+    <section id="org" class="rules tab-content" aria-label="Regulamin Organizacji">
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">1</div>
+                <div class="rule-text">
+                    Obowiązkowa obecność na spotkaniach co tydzień w sobotę około godziny 21:00.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">2</div>
+                <div class="rule-text">
+                    Zakaz spamu na radiu.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">3</div>
+                <div class="rule-text">
+                    Zakaz gadania o głupotach na radiu przy poważnych akcjach typu napad.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">4</div>
+                <div class="rule-text">
+                    Na spotkaniach organizacji obowiązuje zachowanie ciszy, gdy ktoś inny mówi.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">5</div>
+                <div class="rule-text">
+                    Zakaz działania na szkodę organizacji.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">6</div>
+                <div class="rule-text">
+                    Zakaz trollowania i griefingu.
+                </div>
+            </div>
+        </article>
+
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">7</div>
+                <div class="rule-text">
+                    Zakaz nadużywania władzy przez zarząd organizacji.
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <!-- KODEKS ORGANIZACJI -->
+    <section id="code" class="rules tab-content" aria-label="Kodeks Organizacji">
+        <article class="rule">
+            <div class="rule-inner">
+                <div class="rule-number">✠</div>
+                <div class="rule-text">
+                    <strong>Przysięgam:</strong><br />
+                    – lojalność wobec organizacji,<br />
+                    – utrzymać w tajemnicy każdą informację o organizacji,<br />
+                    – być wiernym organizacji,<br />
+                    – być gotowym oddać życie za każdego członka grupy.
+                </div>
+            </div>
+        </article>
+    </section>
+</main>
+
+<footer>
+    © 2025 <span>Crimson Order</span>
+</footer>
+
+<script>
+    // Obsługa zakładek
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetId = tab.getAttribute('data-target');
+
+            contents.forEach(c => c.classList.remove('active'));
+            tabs.forEach(t => t.classList.remove('active'));
+
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            tab.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
